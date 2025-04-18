@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สุขสันต์วันเกิดนะพี่ 💙</title>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Mali', sans-serif;
+      background: linear-gradient(to right, #fceefb, #e0f7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 600px;
+    }
+    h1 {
+      font-family: 'Itim', cursive;
+      font-size: 1.8rem;
+      color: #045c88;
+      margin-bottom: 1rem;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #0077b6;
+      color: white;
+    }
+    .btn:hover {
+      background-color: #005f87;
+    }
+    #audio-section {
+      margin-top: 1rem;
+    }
+    audio {
+      width: 100%;
+    }
+    #questionImage {
+  max-width:  60%;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+}
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 6s infinite ease-in;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: pink;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -7.5px;
+      left: 0;
+    }
+    .heart::after {
+      left: -7.5px;
+      top: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="questionImage" src="IMG_7125.JPG" alt="question image">
+    <h1>Happy Birthday Jigchow 🎉</h1>
+    <div class="question" id="question">วันนี้วันเกิดคุณใช่หรือไม่?</div>
+    <div id="buttons">
+      <button class="btn" onclick="nextStep('yes')">ใช่</button>
+      <button class="btn" onclick="nextStep('no')">ไม่</button>
+    </div>
+    <div id="audio-section" style="display:none;">
+      <audio controls id="birthdayAudio">
+        <source src="Hbd.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+      </audio>
+      <br><br>
+      <button class="btn" onclick="nextStep('aftermusic')">➜ ถัดไป</button>
+    </div>
+  </div>
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    let step = 0;
+    const imageMap = [
+      "IMG_7124.JPG", "IMG_7125.JPG", "IMG_7126.JPG", "IMG_7127.JPG", "IMG_7128.JPG",
+      "IMG_7129.JPG", "IMG_7130.JPG", "IMG_7131.JPG", "IMG_7132.JPG", "IMG_7132.JPG", "IMG_7132.JPG"
+    ];
+
+    function updateImage() {
+      const img = document.getElementById("questionImage");
+      img.src = imageMap[Math.min(step, imageMap.length - 1)];
+    }
+
+    function nextStep(answer) {
+      const q = document.getElementById('question');
+      const btns = document.getElementById('buttons');
+      const audioSection = document.getElementById('audio-section');
+      const audio = document.getElementById('birthdayAudio');
+      updateImage();
+
+      if (step === 0) {
+        if (answer === 'yes') {
+          q.textContent = 'วันเกิดคุณจริงหรอ?';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('real')">จริง</button><button class="btn" onclick="nextStep('fake')">ไม่จริง</button>`;
+          step++;
+        } else {
+          q.textContent = 'วันนี้วันเกิดคุณใช่หรือไม่?';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('yes')">ใช่</button><button class="btn" onclick="nextStep('yes')">ใช่</button>`;
+        }
+      } else if (step === 1) {
+        if (answer === 'real') {
+          q.textContent = 'วันเกิดคุณแน่นะ?';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('sure')">แน่ครับ</button><button class="btn" onclick="nextStep('liar')">โกหก</button>`;
+          step++;
+        } else {
+          q.textContent = 'ไปเกิดใหม่ก่อนนะ แล้วกลับมาตอบใหม่';
+          btns.innerHTML = `<button class="btn" onclick="location.reload()">กลับไปเริ่มใหม่</button>`;
+        }
+      } else if (step === 2) {
+        if (answer === 'liar') {
+          location.reload();
+        } else {
+          q.textContent = 'โอเค เชื่อแล้วว่าวันเกิดคุณ 🎉';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('cake')">➜ ต่อไป</button>`;
+          step++;
+        }
+      } else if (step === 3) {
+        q.textContent = 'คุณจะกินเค้กเอง หรือให้เราป้อน?';
+        btns.innerHTML = `<button class="btn" onclick="nextStep('feed')">ป้อนสิ</button><button class="btn" onclick="nextStep('refusecake')">ไม่กิน</button>`;
+        step++;
+      } else if (step === 4) {
+        if (answer === 'refusecake') {
+          q.textContent = 'ต้องกินนะ เราตั้งใจทำมาเลยน้า 🍰';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('acceptcake')">กิน</button><button class="btn" onclick="nextStep('acceptcake')">กิน</button>`;
+        } else {
+          q.textContent = 'ถ้าเราร้องเพลงให้จะฟังมั้ย?';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('listen')">ฟัง</button><button class="btn" onclick="nextStep('refusemusic')">ไม่ฟัง</button>`;
+          step++;
+        }
+      } else if (step === 5) {
+        if (answer === 'refusemusic') {
+          q.textContent = 'ขอร้องนะ ฟังเถอะ เราตั้งใจร้องแล้ว 🥺';
+          btns.innerHTML = `<button class="btn" onclick="nextStep('listen')">ฟัง</button><button class="btn" onclick="nextStep('listen')">ฟัง</button>`;
+        } else {
+          q.textContent = '▶️ กดเพื่อฟังเพลงที่เราร้องให้พี่';
+          btns.style.display = 'none';
+          audioSection.style.display = 'block';
+          audio.play();
+          step++;
+        }
+        
+      } else if (answer === 'aftermusic') {
+        audio.pause();
+        audio.currentTime = 0;
+        audioSection.style.display = 'none';
+        btns.style.display = 'block';
+        q.textContent = 'รู้มั้ยว่าคุณพิเศษแค่ไหน?';
+        btns.innerHTML = `<button class="btn" onclick="nextStep('knowspecial')">รู้</button><button class="btn" onclick="nextStep('dunno')">ไม่รู้</button>`;
+        step = 6;
+      } else if (step === 6) {
+  if (answer === 'knowspecial') {
+    q.textContent = 'รู้ก็ดีแล้ว ว่าพี่พิเศษที่สุดในโลกของเราตอนนี้เลย พลังพิเศษของพี่คือการโอ๋ไง เก่งมากด้วย 🫶';
+    btns.innerHTML = `<button class="btn" onclick="nextStep('wish')">➜ ต่อไป</button>`;
+    step++;
+  } else if (answer === 'dunno') {
+    q.textContent = 'แล้วอยากรู้ไหม?';
+    btns.innerHTML = `<button class="btn" onclick="nextStep('knowspecial')">อยาก</button><button class="btn" onclick="nextStep('dontwant')">ไม่อยาก</button>`;
+  } else if (answer === 'dontwant') {
+    q.textContent = 'อยากเถอะ 🥺';
+    btns.innerHTML = `<button class="btn" onclick="nextStep('knowspecial')">อยาก</button><button class="btn" onclick="nextStep('knowspecial')">อยาก</button>`;
+  }
+} else if (step === 7) {
+        q.textContent = 'ถ้าต้องขอพรให้ตัวเองวันนี้ ขอได้แค่ 1 อย่าง พี่จะขอ...';
+        btns.innerHTML = `<button class="btn" onclick="nextStep('feel')">ขอให้มีความสุขตลอดไป</button>`;
+        step++;
+      } else if (step === 8) {
+        q.textContent = 'เรามีของขวัญพิเศษให้ อยากเปิดมั้ย?';
+        btns.innerHTML = `<button class="btn" onclick="nextStep('open')">เปิดสิ 🎁</button><button class="btn" onclick="nextStep('skipgift')">ไม่เปิด</button>`;
+        step++;
+     } else if (step === 9) {
+  if (answer === 'open') {
+    window.open('https://your-video-link-here.com', '_blank');
+    q.textContent = 'เปิดวิดีโอเรียบร้อยแล้ว 😊';
+    btns.innerHTML = `<button class="btn" onclick="nextStep('final')">➜ ต่อไป</button>`;
+  } else if (answer === 'skipgift') {
+    q.textContent = 'เปิดเถอะนะ 🥺 เราตั้งใจทำให้เลย';
+    btns.innerHTML = `<button class="btn" onclick="nextStep('open')">เปิดเลยครับ 🎁</button>`;
+  }
+} else {
+        step++;
+        }
+      } else if (step === 10 || answer === 'final') {
+        q.textContent = 'สุขสันต์วันเกิดนะ ขอบคุณที่เกิดมาและโตมาได้อย่างน่ารักแบบนี้ 🥹';
+        btns.innerHTML = `<button class="btn">💙 รักเสมอ 💙</button>`;
+        updateImage();
+      }
+    }
+
+    // generate hearts
+    for (let i = 0; i < 20; i++) {
+      let heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+      document.getElementById("hearts").appendChild(heart);
+    }
+  </script>
+</body>
+</html>

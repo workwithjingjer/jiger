@@ -221,6 +221,7 @@
           window.open('https://drive.google.com/file/d/1Qj_BOqhlRICYYvBzcxeTCUOJsvj1pB_m/view?usp=drive_link', '_blank');
           q.textContent = 'เปิดวิดีโอเรียบร้อยแล้ว 😊';
           btns.innerHTML = `<button class="btn" onclick="nextStep('final')">➜ ต่อไป</button>`;
+	step++;
       } else if (answer === 'skipgift') {
   q.textContent = 'เปิดเถอะนะ 🥺 เราตั้งใจทำให้เลย';
   btns.innerHTML = `<button class="btn" onclick="step++; window.open('VDO.mov', '_blank'); nextStep('final')">เปิดเลยครับ 🎁</button>`;
